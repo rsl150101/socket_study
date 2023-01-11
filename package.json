@@ -1,0 +1,32 @@
+{
+  "name": "zoom_clone",
+  "version": "1.0.0",
+  "description": "선행지식 : Express, Pug, Vanilla JS, babel, nodemon, HTML 요구사항 : Node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rsl150101/socket_study.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rsl150101/socket_study/issues"
+  },
+  "homepage": "https://github.com/rsl150101/socket_study#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "pug": "^3.0.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
+    "@babel/node": "^7.20.7",
+    "@babel/preset-env": "^7.20.2",
+    "nodemon": "^2.0.20"
+  }
+}
