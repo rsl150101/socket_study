@@ -17,7 +17,7 @@ app.get("/",(req,res)=>{
 })
 
 const handleListen = ()=>{
-    console.log(`✅ 서버가 연결되었습니다. http://localhost:${PORT}`)
+    console.log(`✅ HTTP 서버가 연결되었습니다. http://localhost:${PORT}`)
 }
 
 //* 기존의 서버 구축
@@ -33,9 +33,16 @@ const wsSever = new WebSocket.Server({server})
 //- ws.Server({server : WebSocket 에 연결할 HTTP 서버, port : WebSocket 연결시 사용할 port 로 생략시 server 에 연결된 HTTP 서버의 포트를 사용 })
 //! 항상 http 서버와 WebSocket 서버를 같은 port 로 함께 만들지 않아도 됨
 
-//* WebSocket Event
+//* WebSocket Connection Event
 wsSever.on("connection",(socket)=>{ //- 매개변수 socket 은 연결된 브라우저를 뜻함
-
+    console.log("✅ WebSocket : 서버가 브라우저에 연결되었습니다.")
+    socket.on("close", ()=>{ //- 브라우저와 socket 연결이 해제되었을 때 이벤트
+        console.log("❌ WebSocket : 브라우저와 연결이 해제되었습니다.")
+    })
+    socket.send("이 메시지는 서버로부터 전달됨") //- 브라우저로 message 이벤트와 함께 Hello 를 전달
+    socket.on("message",(message)=>{
+        console.log(`브라우저로부터 전달된 메시지 : `,message.toString())
+    })
 })
 //- on method 는 backend 에 연결된 사람의 정보(socket)를 주는데 callback 함수로 정보(socket)를 받음
 
