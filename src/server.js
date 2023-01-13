@@ -40,6 +40,7 @@ const sockets = []; //- socket 이 연결될 때 마다 담길 배열
 wsSever.on("connection", (socket) => {
   //- 매개변수 socket 은 연결된 브라우저를 뜻함
   sockets.push(socket); //- 가짜 socket 데이터베이스에 추가
+  socket.ninkname = "Anonymous"; //- 익명의 유저가 메시지를 보낼 경우도 존재하기 때문에 초기에 익명 설정
   console.log("✅ WebSocket : 서버가 브라우저에 연결되었습니다.");
   socket.on("close", () => {
     //- 브라우저와 socket 연결이 해제되었을 때 이벤트
@@ -47,8 +48,15 @@ wsSever.on("connection", (socket) => {
   });
   //socket.send("이 메시지는 서버로부터 전달됨"); //- send 는 브라우저로 message 이벤트와 함께 내용을 전달
   socket.on("message", (message) => {
-    sockets.forEach((aSocket) => aSocket.send(message.toString()));
-    console.log(`브라우저로부터 전달된 메시지 : `, message.toString());
+    const parsed = JSON.parse(message);
+    switch (parsed.type) {
+      case "new_message":
+        sockets.forEach((aSocket) =>
+          aSocket.send(`${socket.ninkname} : ${parsed.payload}`)
+        );
+      case "nickname":
+        socket.ninkname = parsed.payload;
+    }
   });
 });
 //- on method 는 backend 에 연결된 사람의 정보(socket)를 주는데 callback 함수로 정보(socket)를 받음
