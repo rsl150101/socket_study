@@ -49,13 +49,16 @@ wsSever.on("connection", (socket) => {
   //socket.send("이 메시지는 서버로부터 전달됨"); //- send 는 브라우저로 message 이벤트와 함께 내용을 전달
   socket.on("message", (message) => {
     const parsed = JSON.parse(message);
+    console.log(parsed.type);
     switch (parsed.type) {
       case "new_message":
         sockets.forEach((aSocket) =>
           aSocket.send(`${socket.ninkname} : ${parsed.payload}`)
         );
+        break;
       case "nickname":
         socket.ninkname = parsed.payload;
+        break;
     }
   });
 });
