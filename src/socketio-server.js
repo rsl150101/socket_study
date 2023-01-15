@@ -30,7 +30,9 @@ const io = SocketIO(server);
 
 //* socket.io 서버 연결
 io.on("connection", (socket) => {
-  console.log(socket);
+  socket.on("enterRoom", (msg) => {
+    console.log(msg);
+  });
 });
 
 //* socket.io 위한 서버 구축
